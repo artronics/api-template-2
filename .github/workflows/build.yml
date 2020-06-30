@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - ANQ-*
+      - AMB-*
   pull_request:
     branches: [ master ]
 
@@ -50,8 +50,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/who
+        with:
+          who-to-greet: 'Mona the Octocat'
+
       - name: Terraform init
-        run: terraform init -input=false -backend-config="key=/api-template/test/tfstate.json" ./terraform
+        run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
       - name: Terraform plan
         run: terraform plan -input=false -var="env=test" ./terraform
