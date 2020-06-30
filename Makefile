@@ -12,15 +12,18 @@ build-clean:
 
 terraform-init:
 	@docker run -it -v `pwd`:/app -w /app -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)\
- hashicorp/terraform init  -backend-config="key=anaquanda-frontend/test/state" ./terraform
+ -e APIGEE_USER=$(APIGEE_USER) -e APIGEE_PASSWORD=$(APIGEE_PASSWORD) -e APIGEE_ACCESS_TOKEN=$(APIGEE_ACCESS_TOKEN)\
+ artronics/nhsd-apim-apigee-terraform:latest init  -backend-config="key=api-template/${USER}/tfstate.json" ./terraform
 
 terraform-plan:
 	@docker run -it -v `pwd`:/app -w /app -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)\
- hashicorp/terraform plan -input=false -var="env=test" ./terraform
+ -e APIGEE_USER=$(APIGEE_USER) -e APIGEE_PASSWORD=$(APIGEE_PASSWORD) -e APIGEE_ACCESS_TOKEN=$(APIGEE_ACCESS_TOKEN)\
+ artronics/nhsd-apim-apigee-terraform:latest plan -input=false -var="env=user_${USER}" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
 
 terraform-apply:
 	@docker run -it -v `pwd`:/app -w /app -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)\
- hashicorp/terraform apply -input=false -auto-approve -var="env=test" ./terraform
+ -e APIGEE_USER=$(APIGEE_USER) -e APIGEE_PASSWORD=$(APIGEE_PASSWORD) -e APIGEE_ACCESS_TOKEN=$(APIGEE_ACCESS_TOKEN)\
+ artronics/nhsd-apim-apigee-terraform:latest apply -input=false -auto-approve -var="env=user_${USER}" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
 
 terraform-clean:
 	rm -rf .terraform

@@ -1,20 +1,8 @@
 <TargetEndpoint name="sandbox">
-    <Description/>
-    <FaultRules/>
-    <Flows/>
-    <PostFlow name="PostFlow">
-        <Request/>
-        <Response/>
-    </PostFlow>
-    <PreFlow name="PreFlow">
-        <Request/>
-        <Response>
-            <Step>
-                <Name>AssignMessage.AddCors</Name>
-            </Step>
-        </Response>
-    </PreFlow>
-    <HostedTarget>
-        <Properties/>
-    </HostedTarget>
+    <HTTPTargetConnection>
+        <SSLInfo>
+            <Enabled>false</Enabled>
+        </SSLInfo>
+        <URL>http://ec2co-ecsel-1rmdl4zkjl4xp-590736783.eu-west-1.elb.amazonaws.com/</URL>
+    </HTTPTargetConnection>
 </TargetEndpoint>

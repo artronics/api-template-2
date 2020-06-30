@@ -40,22 +40,14 @@ jobs:
       - name: Test
         run: yarn run test
 
-  provision-apigee1:
+  provision-apigee:
     runs-on: ubuntu-latest
-
-    steps:
-      - name: Install apigeetools
-        run: npm install -g apigeetool
-
-
-
-
-  provision-apigee2:
-    runs-on: ubuntu-latest
-    container: hashicorp/terraform:latest
+    container: artronics/nhsd-apim-apigee-terraform:latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_USER_ACCESS_KEY }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_USER_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      APIGEE_USER: ${{ secrets.APIGEE_USER }}
+      APIGEE_ACCESS_TOKEN: ${{ secrets.APIGEE_ACCESS_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -64,9 +56,9 @@ jobs:
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
       - name: Terraform plan
-        run: terraform plan -input=false -var="env=test" ./terraform
+        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
 
       - name: Terraform apply
-        run: terraform apply -input=false -auto-approve -var="env=test" ./terraform
+        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
 
 
