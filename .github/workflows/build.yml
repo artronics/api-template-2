@@ -40,7 +40,17 @@ jobs:
       - name: Test
         run: yarn run test
 
-  provision-apigee:
+  provision-apigee1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install apigeetools
+        run: npm install -g apigeetool
+
+
+
+
+  provision-apigee2:
     runs-on: ubuntu-latest
     container: hashicorp/terraform:latest
     env:
@@ -49,10 +59,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/who
-        with:
-          who-to-greet: 'Mona the Octocat'
 
       - name: Terraform init
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform

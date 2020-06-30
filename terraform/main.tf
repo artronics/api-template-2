@@ -10,3 +10,11 @@ terraform {
   }
 }
 
+module "api-template" {
+  source             = "github.com/artronics/apim-apigee-terraform.git"
+  name               = "api-template"
+  path               = "api-template"
+  apigee_environment = var.apigee_environment
+  proxy_type         = "sandbox"
+  api_product_display_name = "Template Api"
+}
