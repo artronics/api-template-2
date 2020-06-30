@@ -13,7 +13,7 @@ build-clean:
 terraform-init:
 	@docker run -it -v `pwd`:/app -w /app -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)\
  -e APIGEE_USER=$(APIGEE_USER) -e APIGEE_PASSWORD=$(APIGEE_PASSWORD) -e APIGEE_ACCESS_TOKEN=$(APIGEE_ACCESS_TOKEN)\
- artronics/nhsd-apim-apigee-terraform:latest init  -backend-config="key=api-template/${USER}/tfstate.json" ./terraform
+ artronics/nhsd-apim-apigee-terraform:latest init -backend-config="key=api-template/${USER}/tfstate.json" ./terraform
 
 terraform-plan:
 	@docker run -it -v `pwd`:/app -w /app -e AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID) -e AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)\
