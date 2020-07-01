@@ -42,9 +42,6 @@ jobs:
 
   provision-apigee:
     runs-on: ubuntu-latest
-    container:
-      image: artronics/nhsd-apim-apigee-terraform:latest
-      options: -v /__w/api-template/api-template:/app
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -57,14 +54,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-
-
       - name: Terraform init
-#        run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
-#      - name: Terraform plan
-#        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
-#
-#      - name: Terraform apply
-#        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+      - name: Terraform plan
+        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+
+      - name: Terraform apply
+        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
