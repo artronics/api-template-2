@@ -54,11 +54,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+
+
       - name: Terraform init
+#        run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
-      - name: Terraform plan
-        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
-
-      - name: Terraform apply
-        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+#      - name: Terraform plan
+#        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+#
+#      - name: Terraform apply
+#        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
