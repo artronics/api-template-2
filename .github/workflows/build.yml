@@ -46,18 +46,15 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       APIGEE_USER: ${{ secrets.APIGEE_USER }}
-      APIGEE_PASSWORD: '${{ secrets.APIGEE_PASSWORD }}'
-      APIGEE_ACCESS_TOKEN: ${{ secrets.APIGEE_ACCESS_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Get apigee token
         id: apigeetoken
+        env:
+          APIGEE_PASSWORD: '${{ secrets.APIGEE_PASSWORD }}'
         uses: artronics/apigee-token-action@master
-
-      - name: Test
-        run: echo ${{ steps.apigeetoken.outputs.token }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -72,7 +69,7 @@ jobs:
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
       - name: Terraform plan
-        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ steps.apigeetoken.outputs.token }}" ./terraform
 
       - name: Terraform apply
-        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_password=${APIGEE_PASSWORD}" -var="apigee_access_token=${APIGEE_ACCESS_TOKEN}" ./terraform
+        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ steps.apigeetoken.outputs.token }}" ./terraform

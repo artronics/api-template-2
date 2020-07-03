@@ -6,7 +6,6 @@ provider "aws" {
 provider "apigee" {
   org = "jhosseinidev-eval"
   user = var.apigee_user
-//  password = var.apigee_password
   access_token = var.apigee_access_token
 }
 
