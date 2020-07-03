@@ -54,6 +54,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
+      - name: Get apigee token
+        uses: artronics/apigee-token-action@master
+        with:
+          username: foo@bar.com
+
       - name: Install apigee terraform provider
         run: |
           wget -q https://github.com/NHSDigital/terraform-provider-apigee/releases/download/v0.0.27/terraform-provider-apigee_0.0.27_linux_amd64.tar.gz
