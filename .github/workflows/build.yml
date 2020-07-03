@@ -51,18 +51,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-
       - name: Get apigee token
         id: apigeetoken
         uses: artronics/apigee-token-action@master
         with:
           username: ${{ secrets.APIGEE_USER }}
-          password: ${{ secrets.APIGEE_PASSWORD }}
+          password: '${{ secrets.APIGEE_PASSWORD }}'
 
       - name: Test
         run: echo ${{ steps.apigeetoken.outputs.token }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Install apigee terraform provider
         run: |
