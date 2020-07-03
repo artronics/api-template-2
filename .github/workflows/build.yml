@@ -69,7 +69,7 @@ jobs:
         run: terraform init -input=false -backend-config="key=api-template/test/tfstate.json" ./terraform
 
       - name: Terraform plan
-        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ add-mask::steps.apigeetoken.outputs.token }}" ./terraform
+        run: terraform plan -input=false -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ steps.apigeetoken.outputs.token }}" ./terraform
 
       - name: Terraform apply
-        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ add-mask::steps.apigeetoken.outputs.token }}" ./terraform
+        run: terraform apply -input=false -auto-approve -var="env=test" -var="apigee_user=${APIGEE_USER}" -var="apigee_access_token=${{ steps.apigeetoken.outputs.token }}" ./terraform
