@@ -46,6 +46,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       APIGEE_USER: ${{ secrets.APIGEE_USER }}
+      APIGEE_PASSWORD: '${{ secrets.APIGEE_PASSWORD }}'
       APIGEE_ACCESS_TOKEN: ${{ secrets.APIGEE_ACCESS_TOKEN }}
 
     steps:
@@ -54,9 +55,6 @@ jobs:
       - name: Get apigee token
         id: apigeetoken
         uses: artronics/apigee-token-action@master
-        with:
-          username: ${{ secrets.APIGEE_USER }}
-          password: '${{ secrets.APIGEE_PASSWORD }}'
 
       - name: Test
         run: echo ${{ steps.apigeetoken.outputs.token }}
