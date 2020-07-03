@@ -54,7 +54,7 @@ jobs:
         id: apigeetoken
         env:
           APIGEE_PASSWORD: '${{ secrets.APIGEE_PASSWORD }}'
-        uses: artronics/apigee-token-action@master
+        uses: docker://artronics/apigee-token-action:latest
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
