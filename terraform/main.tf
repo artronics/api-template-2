@@ -18,10 +18,13 @@ terraform {
 
 module "apim-apigee-terraform" {
   source = "github.com/artronics/apim-apigee-terraform.git"
-//  source = "../../apim-apigee-terraform"
   service_name = "api-template"
   service_base_path = "api-template"
-  apigee_environment = "test"
+  apigee_environment = var.apigee_environment
   proxy_type = "sandbox"
   api_product_display_name = "Template Api"
+}
+
+module "apim-ecs-terraform" {
+  source = "./module"
 }
